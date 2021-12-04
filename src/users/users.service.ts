@@ -15,7 +15,7 @@ export class UsersService {
         const isUnique = await this.userModel.findOne({ email: createUserDto.email }) === null;
         if (!isUnique) {
             throw new BadRequestException({
-                error: Errors.USER_EMAIL_NOT_UNIQE,
+                message: [Errors.USER_EMAIL_NOT_UNIQE],
             });
         }
         const createdUser = await this.userModel.create(createUserDto);

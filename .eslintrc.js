@@ -53,5 +53,13 @@ module.exports = {
             'error',
             {'allowAllPropertiesOnSameLine': true},
         ],
+        'function-call-argument-newline': [
+            'error',
+            'always',
+        ],
+        'function-paren-newline': [
+            'error',
+            'multiline-arguments',
+        ],
     },
 };

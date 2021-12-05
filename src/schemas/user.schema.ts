@@ -5,6 +5,9 @@ import { Document } from 'mongoose';
 @Schema()
 export class User {
     @ApiProperty()
+        _id: string;
+
+    @ApiProperty()
     @Prop({
         required: true,
     }) email: string;

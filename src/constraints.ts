@@ -1,3 +1,5 @@
-export type Constraints = {
-    ERROR: 'error'
-}
+const Constraints = {
+    ERROR: 'error',
+};
+
+export default Constraints;

@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import Errors from 'src/errors';
 import { User, UserDocument } from 'src/schemas/user.schema';
 import { CreateUserDto } from './dto/createUser.dto';
+import * as bcrypt from 'bcrypt';
+import Config from 'src/config';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +20,15 @@ export class UsersService {
                 message: [Errors.USER_EMAIL_NOT_UNIQE],
             });
         }
-        const createdUser = await this.userModel.create(createUserDto);
+        const encryptedPassword = await bcrypt.hash(
+            createUserDto.password,
+            Config.BCRYPT_SALT_ROUNDS,
+        );
+        const createdUser = await this.userModel.create({...createUserDto, password: encryptedPassword});
         return createdUser;
+    }
+
+    async findOne(email: string): Promise<User | null> {
+        return this.userModel.findOne({ email });
     }
 }

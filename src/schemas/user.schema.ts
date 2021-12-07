@@ -1,11 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
+import { UserData } from './userData.schema';
 
 @Schema()
 export class User {
     @ApiProperty()
-        _id: string;
+        _id: Types.ObjectId;
 
     @ApiProperty()
     @Prop({
@@ -16,6 +17,12 @@ export class User {
     @Prop({
         required: true,
     }) password: string;
+
+    @ApiProperty()
+    @Prop({
+        type: Types.ObjectId,
+        ref: 'UserData',
+    }) userData: UserData;
 }
 
 export type UserDocument = User & Document;

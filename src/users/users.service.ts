@@ -13,7 +13,7 @@ export class UsersService {
         @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     ) { }
 
-    async createUser(createUserDto: CreateUserDto): Promise<User> {
+    async createUser(createUserDto: CreateUserDto): Promise<UserDocument> {
         const isUnique = await this.userModel.findOne({ email: createUserDto.email }) === null;
         if (!isUnique) {
             throw new BadRequestException({
@@ -28,7 +28,18 @@ export class UsersService {
         return createdUser;
     }
 
-    async findOne(email: string): Promise<User | null> {
+    async findOne(email: string): Promise<UserDocument | null> {
         return this.userModel.findOne({ email });
+    }
+
+    async findOneById(id: string): Promise<UserDocument | null> {
+        return await this.userModel.findById(id).populate('userData');
+    }
+
+    async updateById(id: string, user: UserDocument): Promise<void> {
+        await this.userModel.findByIdAndUpdate(
+            id,
+            user,
+        );
     }
 }

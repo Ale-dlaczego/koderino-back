@@ -1,4 +1,4 @@
-export type CurrentUserType = {
+export class CurrentUserType {
     userId: string;
     email: string;
 }

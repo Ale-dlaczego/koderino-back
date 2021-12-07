@@ -1,14 +1,19 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
-import { ApiResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { Body, Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto/userLogin.dto';
+import { AuthTokenType } from '../types/AuthToken.type';
 
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) { }
 
+    @ApiOperation({
+        summary: 'Generate user auth token',
+        description: 'Generate authorization user token with token type',
+    })
     @Post('login')
-    @ApiResponse({status: 200})
+    @ApiResponse({status: 200, type: AuthTokenType })
     @ApiUnauthorizedResponse()
     async login(
         @Body() userLoginDto: UserLoginDto,

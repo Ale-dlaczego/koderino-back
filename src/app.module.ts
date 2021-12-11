@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { UsersDataModule } from './users-data/users-data.module';
-import { WorkPositionsModule } from './work-positions/work-positions.module';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersDataModule } from './modules/users-data/users-data.module';
+import { WorkPositionsModule } from './modules/work-positions/work-positions.module';
 
 @Module({
     imports: [

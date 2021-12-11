@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
-import { CurrentUser } from 'src/auth/currentUser.decorator';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CurrentUser } from 'src/modules/auth/currentUser.decorator';
+import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
+import { openApiTags } from 'src/openApiTags';
 import { User } from 'src/schemas/user.schema';
 import { CurrentUserType } from 'src/types/CurrentUser.type';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -14,6 +15,7 @@ export class UsersController {
     @ApiOperation({
         summary: 'Create new user',
         description: 'Register new user',
+        tags: [openApiTags.users],
     })
     @ApiResponse({ status: 201, description: 'The record has been successfully created object.'})
     @Post()
@@ -26,6 +28,7 @@ export class UsersController {
     @ApiOperation({
         summary: '[AUTH] Get user object w/references and data',
         description: 'Get complete user obiect with references and data to other obiects',
+        tags: [openApiTags.users],
     })
     @ApiResponse({ status: 201, description: 'Authorized/logged in user object.', type: User})
     @ApiUnauthorizedResponse()

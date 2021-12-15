@@ -12,16 +12,31 @@ export class UsersDataService {
         private readonly usersService: UsersService,
     ) { }
 
-    async updateUserData(userDataUpdateDto: UserDataUpdateDto, userId: string) {
+    async updateUserData(userDataUpdateDto: UserDataUpdateDto, userId: string): Promise<UserDataDocument> {
         const user = await this.usersService.findOneById(userId);
 
-        if (user.userData) await this.userDataModel.findByIdAndRemove(user.userData._id);
+        const { userData } = user;
+        let updatedUserData: UserDataDocument;
 
-        const userData = await this.userDataModel.create(userDataUpdateDto);
-        user.userData = userData._id;
-        this.usersService.updateById(
+        if (userData) {
+            updatedUserData = await this.userDataModel.findByIdAndUpdate(
+                userData._id,
+                userDataUpdateDto,
+                {
+                    new: true,
+                    upsert: true,
+                },
+            );
+        } else {
+            updatedUserData = await this.userDataModel.create(userDataUpdateDto);
+        }
+
+        user.userData = updatedUserData._id;
+        await this.usersService.updateById(
             user._id,
             user,
         );
+
+        return updatedUserData;
     }
 }

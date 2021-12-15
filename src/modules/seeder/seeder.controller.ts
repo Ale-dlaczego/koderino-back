@@ -11,7 +11,7 @@ export class SeederController {
     ) { }
 
     @ApiOperation({
-        summary: 'Generate random work positions',
+        summary: '[ADMIN] Generate random work positions',
         description: 'Generate random work positions',
         tags: [openApiTags.seeder],
     })

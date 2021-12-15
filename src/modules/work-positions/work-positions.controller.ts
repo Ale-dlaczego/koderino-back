@@ -25,7 +25,7 @@ export class WorkPositionsController {
     }
 
     @ApiOperation({
-        summary: '[AUTH] Create new work position',
+        summary: '[ADMIN] Create new work position',
         description: 'Create new work position',
         tags: [openApiTags.workPositions],
     })

@@ -21,6 +21,11 @@ export class UserData {
     @Prop({
         default: '',
     }) localization: string;
+
+    @ApiProperty()
+    @Prop({
+        default: '',
+    }) bio: string;
 }
 
 export type UserDataDocument = UserData & Document;

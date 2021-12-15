@@ -3,19 +3,24 @@ import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class UserDataUpdateDto {
     @ApiProperty()
-    @IsString()
     @IsOptional()
+    @IsString()
         name?: string;
 
     @ApiProperty()
+    @IsOptional()
     @IsString()
     @MinLength(9)
     @MaxLength(15)
-    @IsOptional()
         phoneNumber?: string;
 
     @ApiProperty()
-    @IsString()
     @IsOptional()
+    @IsString()
         localization?: string;
+
+    @ApiProperty()
+    @IsOptional()
+    @IsString()
+        bio?: string;
 }

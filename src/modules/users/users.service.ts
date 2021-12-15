@@ -28,7 +28,7 @@ export class UsersService {
         return createdUser;
     }
 
-    async findOne(email: string): Promise<UserDocument | null> {
+    async findOneByEmail(email: string): Promise<UserDocument | null> {
         return this.userModel.findOne({ email });
     }
 

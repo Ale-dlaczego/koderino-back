@@ -1,65 +1,40 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { openApiTags } from 'src/openApiTags';
-import { WorkPositionSeachResultItem } from './dto/workPositionSeachResultItem';
+import { WorkPosition, WorkPositionDocument } from 'src/schemas/workPosition.schema';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { WorkPositionsService } from './work-positions.service';
+import WorkPositionCreateDto from './dto/workPositionCreate.dto';
 
 @Controller('work-positions')
 export class WorkPositionsController {
+
+    constructor(
+        private readonly workPositionsService: WorkPositionsService,
+    ) { }
 
     @ApiOperation({
         summary: 'Get all work positions',
         description: 'Get all avaiable work positions',
         tags: [openApiTags.workPositions],
     })
-    @ApiResponse({status: 200, type: [WorkPositionSeachResultItem]})
+    @ApiResponse({status: 200, type: [WorkPosition]})
     @Get()
-    public getAllWorkPositions(): WorkPositionSeachResultItem[] {
-        return [
-            {
-                id: 'id1',
-                name: 'Internship as React.js Developer',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
-            },
-            {
-                id: 'id2',
-                name: 'Junior React.js Developer',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
-            },
-            {
-                id: 'id3',
-                name: 'Regular React.js Developer',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
-            },
-            {
-                id: 'id4',
-                name: 'Senior React.js Developer',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
-            },
-            {
-                id: 'id5',
-                name: 'React.js Tech Lead',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
-            },
-            {
-                id: 'id6',
-                name: 'Internship as React Native Developer',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
-            },
-            {
-                id: 'id7',
-                name: 'Junior React Native Developer',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
-            },
-            {
-                id: 'id8',
-                name: 'Regular React Native Developer',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
-            },
-            {
-                id: 'id19',
-                name: 'Senior React Native Developer',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
-            },
-        ];
+    public async getAllWorkPositions(): Promise<WorkPositionDocument[]> {
+        return await this.workPositionsService.getAllWorkPositions();
+    }
+
+    @ApiOperation({
+        summary: '[AUTH] Create new work position',
+        description: 'Create new work position',
+        tags: [openApiTags.workPositions],
+    })
+    @ApiResponse({ status: 200, type: WorkPosition })
+    @UseGuards(JwtAuthGuard)
+    @Post()
+    public async createWorkPosition(
+        @Body() workPositionCreateDto: WorkPositionCreateDto,
+    ): Promise<WorkPositionDocument> {
+        return await this.workPositionsService.createWorkPosition(workPositionCreateDto);
     }
 }

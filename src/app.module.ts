@@ -6,6 +6,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersDataModule } from './modules/users-data/users-data.module';
 import { WorkPositionsModule } from './modules/work-positions/work-positions.module';
+import { SeederModule } from './modules/seeder/seeder.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { WorkPositionsModule } from './modules/work-positions/work-positions.mod
         AuthModule,
         UsersDataModule,
         WorkPositionsModule,
+        SeederModule,
     ],
     controllers: [AppController],
 })

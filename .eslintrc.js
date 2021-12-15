@@ -12,7 +12,10 @@ module.exports = {
         'ecmaVersion': 13,
         'sourceType': 'module',
     },
-    'plugins': ['@typescript-eslint'],
+    'plugins': [
+        '@typescript-eslint',
+        'unused-imports',
+    ],
     'rules': {
         'indent': [
             'error',
@@ -60,6 +63,12 @@ module.exports = {
         'function-paren-newline': [
             'error',
             'multiline-arguments',
+        ],
+        'no-unused-vars': 'off',
+        'unused-imports/no-unused-imports': 'error',
+        'unused-imports/no-unused-vars': [
+            'warn',
+            { 'vars': 'all', 'varsIgnorePattern': '^_', 'args': 'after-used', 'argsIgnorePattern': '^_' },
         ],
     },
 };

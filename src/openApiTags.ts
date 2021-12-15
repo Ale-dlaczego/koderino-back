@@ -3,4 +3,5 @@ export const openApiTags = {
     auth: 'Auth',
     usersData: 'Users data',
     workPositions: 'Work positions',
+    seeder: 'Seeder',
 };
